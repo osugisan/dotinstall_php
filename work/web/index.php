@@ -6,8 +6,9 @@ include('../app/_parts/_header.php');
 ?>
 
 <form action="result.php" method="get">
-  <input type="text" name="message">
-  <input type="text" name="username">
+  <label><input type="checkbox" name="colors[]" value="orange"> Orange</label>
+  <label><input type="checkbox" name="colors[]" value="pink"> Pink</label>
+  <label><input type="checkbox" name="colors[]" value="gold"> Gold</label>
   <button>Send</button>
 </form>
 
