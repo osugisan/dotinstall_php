@@ -78,3 +78,46 @@ header('Location: http://localhost:8080/result.php');
 exit;
 ?>
 
+
+・CSRF対策
+
+トークンを発行することで、悪意のあるアクセスを弾く
+
+functions.php
+<?php
+function createToken()
+{
+  if (!isset($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+  }
+}
+
+function validateToken()
+{
+  if (empty($_SESSION['token']) || $_SESSION['token'] !== filter_input(INPUT_POST, 'token')) {
+    exit('Invalid request');
+  }
+}
+
+session_start();
+?>
+
+
+index.php
+<?php
+createToken():
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  validateToken();
+  .....
+
+}
+
+.....
+
+<form action="" method="post">
+  <input type="text" name="message">
+  <button>Post</button>
+  <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+</form>
+?>
